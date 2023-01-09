@@ -11,6 +11,7 @@ final Tenant tenant;
     TextEditingController paymentController = TextEditingController();
 
     return Container(
+      padding: EdgeInsets.all(20),
     child: Column(
       children: [
         Row(
@@ -21,25 +22,34 @@ final Tenant tenant;
             Text('${tenant.name}')
           ],
         ),
+        SizedBox(height: 20,),
         Row(
           children: [
             Text('Phone Number:'),
             Text('${tenant.cell}'),
           ],
         ),
+        SizedBox(height: 20,),
+
         Row(
           children: [
             Text('Amount Due:'),
             Text('${tenant.balance}'),
           ],
         ),
+        SizedBox(height: 20,),
+
         Row(
           children: [
             Text('Charge Per Month:'),
             Text('${tenant.balancedUp}'),
           ],
         ),
+        SizedBox(height: 20,),
+
         Text("Register payment"),
+        SizedBox(height: 20,),
+
         TextFormField(
           controller: paymentController,
           keyboardType: TextInputType.number,
@@ -49,6 +59,8 @@ final Tenant tenant;
           decoration: InputDecoration(labelText: 'Amount'),
 
         ),
+        SizedBox(height: 20,),
+
         ElevatedButton(onPressed: (){
 
         }, child: Text('PAY'))
