@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kitubs/screens/home/home.dart';
+import 'package:kitubs/screens/payments/payment.dart';
 
 import 'add_tenant/add_tenant.dart';
 
@@ -23,6 +24,7 @@ class _DashboardState extends State<Dashboard> {
           Home(),
 
           AddTenant(),
+          PaymentPage()
 
           // Notifications()
         ],
@@ -42,6 +44,10 @@ class _DashboardState extends State<Dashboard> {
           BottomNavigationBarItem(
               icon: Icon(Icons.add_circle_outline_sharp),
               label: "Tenants"
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.monetization_on_rounded),
+              label: "Payments"
           ),
           // BottomNavigationBarItem(
           //     icon: FaIcon(FontAwesomeIcons.clock,color: Colors.brown,),

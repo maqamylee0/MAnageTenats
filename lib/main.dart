@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:kitubs/providers/payment_provider.dart';
 import 'package:kitubs/providers/tenant_provider.dart';
 import 'package:kitubs/screens/dashboard.dart';
 import 'package:kitubs/screens/home/home.dart';
@@ -13,6 +14,8 @@ void main() {
          return MultiProvider(
             providers: [
               ChangeNotifierProvider(create: (_) => TenantsProvider()),
+              ChangeNotifierProvider(create: (_) => PaymentProvider()),
+
             ],
             child: const MyApp(),
           ) ;

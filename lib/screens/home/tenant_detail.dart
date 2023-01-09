@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kitubs/screens/home/model/payment_model.dart';
 import 'package:kitubs/screens/home/model/tenant_model.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/payment_provider.dart';
 import '../../providers/tenant_provider.dart';
 
 class TenantDetail extends StatelessWidget {
@@ -13,6 +15,7 @@ final Tenant tenant;
   Widget build(BuildContext context) {
     TextEditingController paymentController = TextEditingController();
     final tenants = Provider.of<TenantsProvider>(context);
+    final payments = Provider.of<PaymentProvider>(context);
 
     return Container(
       margin: EdgeInsets.all(20),
@@ -128,6 +131,12 @@ final Tenant tenant;
           children: [
             ElevatedButton(onPressed: (){
              tenants.changeBalance(context,tenant,paymentController.text);
+             Payment payment = Payment();
+             payment.id='';
+             payment.amount= paymentController.text;
+             payment.payer = tenant.name;
+             payment.date = DateTime.now().toString();
+             payments.addPayment(context, payment.toMap());
             }, child: Text('PAY')),
             ElevatedButton(onPressed: (){
 

@@ -148,8 +148,8 @@ class _AddTenantState extends State<AddTenant> {
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size.fromHeight(60),
-                    primary: Colors.brown[700],
-                    onPrimary: Colors.white,
+
+
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),

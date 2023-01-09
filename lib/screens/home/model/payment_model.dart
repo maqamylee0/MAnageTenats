@@ -3,7 +3,7 @@ import 'dart:core';
 class Payment{
   String? id;
   String? payer;
-  int? amount;
+  String? amount;
   String? date;
 
   Payment({this.id, this.payer, this.amount,this.date});
@@ -17,11 +17,11 @@ class Payment{
     };
   }
 
-  factory Payment.fromMap(Map<String, dynamic> map) {
+  factory Payment.fromJson(Map<String, dynamic> map) {
     return Payment(
       id: map['id'] as String,
       payer: map['payer'] as String,
-      amount: map['amount'] as int,
+      amount: map['amount'] as String,
       date: map['date'] as String
     );
   }

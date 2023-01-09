@@ -7,6 +7,8 @@ import '../services/tenant_service.dart';
 class TenantsProvider extends ChangeNotifier{
 
   List<Tenant> listOfTenants = [];
+  bool refetch = false;
+  bool refetchBalance = false;
 
   var tenantService = TenantService();
 
@@ -20,11 +22,14 @@ class TenantsProvider extends ChangeNotifier{
   }
   Future<void> addTenants(context,var tenant) async {
     await  tenantService.addTenants(context, tenant);
+    refetch = true;
     print(tenant);
     notifyListeners();
   }
+
   Future<void> changeBalance(context,Tenant tenant,paid) async {
     await  tenantService.changeBalance(context, tenant,paid);
+    refetchBalance = true;
     print(tenant);
     notifyListeners();
   }
