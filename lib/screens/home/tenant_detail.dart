@@ -17,7 +17,8 @@ final Tenant tenant;
     final tenants = Provider.of<TenantsProvider>(context);
     final payments = Provider.of<PaymentProvider>(context);
 
-    return Container(
+    return
+      Container(
       margin: EdgeInsets.all(20),
       // decoration: BoxDecoration(
       //   borderRadius: BorderRadius.circular(10),
@@ -129,14 +130,17 @@ final Tenant tenant;
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            ElevatedButton(onPressed: (){
+            ElevatedButton(onPressed: () async {
+              showLoaderDialog(context);
              tenants.changeBalance(context,tenant,paymentController.text);
              Payment payment = Payment();
              payment.id='';
              payment.amount= paymentController.text;
              payment.payer = tenant.name;
              payment.date = DateTime.now().toString();
-             payments.addPayment(context, payment.toMap());
+             await payments.addPayment(context, payment.toMap());
+              Navigator.pop(context);
+
             }, child: Text('PAY')),
             ElevatedButton(onPressed: (){
 
@@ -153,4 +157,21 @@ final Tenant tenant;
     ),
     );
   }
-}
+
+  void showLoaderDialog(BuildContext context) {
+      AlertDialog alert=AlertDialog(
+        content: new Row(
+          children: [
+            CircularProgressIndicator(),
+            Container(margin: EdgeInsets.only(left: 7),child:Text("Loading..." )),
+          ],),
+      );
+      showDialog(barrierDismissible: false,
+        context:context,
+        builder:(BuildContext context){
+          return alert;
+        },
+      );
+    }
+  }
+

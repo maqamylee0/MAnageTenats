@@ -9,6 +9,7 @@ class TenantsProvider extends ChangeNotifier{
   List<Tenant> listOfTenants = [];
   bool refetch = false;
   bool refetchBalance = false;
+  bool showCircle = false;
 
   var tenantService = TenantService();
 
@@ -27,8 +28,12 @@ class TenantsProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  Future<void> changeBalance(context,Tenant tenant,paid) async {
-    await  tenantService.changeBalance(context, tenant,paid);
+  Future<void> changeBalance(context,var tenant,paid) async {
+    showCircle = true;
+
+    var remain = int.parse(tenant.balance) - int.parse(paid);
+    var data = {'balance': remain};
+    await  tenantService.changeBalance(tenant,data);
     refetchBalance = true;
     print(tenant);
     notifyListeners();

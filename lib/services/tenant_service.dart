@@ -34,7 +34,7 @@ class TenantService {
       // //loop through the list and convert the map to Article object
       for (Map<String, dynamic> tenantItem in responseBody) {
         //Creates an article object
-        print('item ${tenantItem['ID']}');
+        // print('item ${tenantItem['ID']}');
         var tenant = Tenant.fromJson(tenantItem);
         listToBeReturned.add(tenant);
       }
@@ -82,11 +82,12 @@ class TenantService {
       }
     }
   }
-  Future changeBalance(context, tenant, paid) async {
-    showDialog(context: context, barrierDismissible: false,
-        builder: (context) => const Center(child: CircularProgressIndicator()));
-    var remain = int.parse(tenant.balance) - int.parse(paid);
-    var data = {'balance': remain};
+  Future changeBalance( tenant,data) async {
+
+    // showDialog(context: context, barrierDismissible: false,
+    //     builder: (context) => const Center(child: CircularProgressIndicator()));
+    // var remain = int.parse(tenant.balance) - int.parse(paid);
+    // var data = {'balance': remain};
     print('hi $data');
     var headers = {
       'Content-Type': 'application/json'
@@ -100,7 +101,7 @@ class TenantService {
       Fluttertoast.showToast(
           toastLength: Toast.LENGTH_LONG,
           msg: 'Added Successfully');
-      Navigator.pop(context);
+      // Navigator.pop(context);
       if (response.statusCode == 200) {
 
 

@@ -1,4 +1,6 @@
+import 'package:cron/cron.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kitubs/screens/home/home.dart';
 import 'package:kitubs/screens/payments/payment.dart';
@@ -15,20 +17,21 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   int _currentIndex = 0;
 
+
+
+
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       body: IndexedStack(
-        children: [
+        index: _currentIndex,
+        children: const [
           Home(),
-
           AddTenant(),
           PaymentPage()
 
-          // Notifications()
         ],
-        index: _currentIndex,
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -36,7 +39,7 @@ class _DashboardState extends State<Dashboard> {
           // Navigator.pop(context);
           setState(()=>_currentIndex = index);
         },
-        items:  [
+        items:  const [
           BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: "Home"
@@ -49,10 +52,6 @@ class _DashboardState extends State<Dashboard> {
               icon: Icon(Icons.monetization_on_rounded),
               label: "Payments"
           ),
-          // BottomNavigationBarItem(
-          //     icon: FaIcon(FontAwesomeIcons.clock,color: Colors.brown,),
-          //     label: "Notifications"
-          // ),
 
         ],
       ),
