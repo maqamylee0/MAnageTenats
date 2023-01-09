@@ -47,14 +47,25 @@ class BigPost extends StatelessWidget {
             //   },
             // ),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 Text(
                   "${tenant.name?.toUpperCase()}",
                   style: Theme.of(context).textTheme.headline6,
                 ),
-                Text('${tenant.amount}'),
-                Text(
-                    "${tenant.balance}"
+                SizedBox(height: 10,),
+                // Text('${tenant.amount}'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                        "Amount Due :  "
+                    ),
+                    Text(
+                        "${tenant.balance}"
+                    ),
+                  ],
                 )
               ],
             ),

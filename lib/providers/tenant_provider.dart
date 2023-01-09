@@ -18,4 +18,14 @@ class TenantsProvider extends ChangeNotifier{
     listOfTenants = await tenantService.getAllTenants();
     notifyListeners();
   }
+  Future<void> addTenants(context,var tenant) async {
+    await  tenantService.addTenants(context, tenant);
+    print(tenant);
+    notifyListeners();
+  }
+  Future<void> changeBalance(context,Tenant tenant,paid) async {
+    await  tenantService.changeBalance(context, tenant,paid);
+    print(tenant);
+    notifyListeners();
+  }
 }

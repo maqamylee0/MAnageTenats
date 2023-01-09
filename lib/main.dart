@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:kitubs/providers/tenant_provider.dart';
+import 'package:kitubs/screens/dashboard.dart';
 import 'package:kitubs/screens/home/home.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.blue,
       ),
-      home: Home(),
+      home: Dashboard(),
     );
   }
 }

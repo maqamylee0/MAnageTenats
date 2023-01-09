@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kitubs/screens/home/model/tenant_model.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/tenant_provider.dart';
 
 class TenantDetail extends StatelessWidget {
   const TenantDetail({Key? key, required this.tenant}) : super(key: key);
@@ -9,41 +12,100 @@ final Tenant tenant;
   @override
   Widget build(BuildContext context) {
     TextEditingController paymentController = TextEditingController();
+    final tenants = Provider.of<TenantsProvider>(context);
 
     return Container(
-      padding: EdgeInsets.all(20),
+      margin: EdgeInsets.all(20),
+      // decoration: BoxDecoration(
+      //   borderRadius: BorderRadius.circular(10),
+      //   color: Colors.white,
+      //   border: Border(
+      //     left: BorderSide(
+      //       color: Colors.green,
+      //     ),
+      //   ),
+      // ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        color: Colors.grey
+      ),
+      height: MediaQuery.of(context).size.height*0.7,
+      padding: EdgeInsets.all(30),
     child: Column(
+
+
+
       children: [
-        Row(
-          children: [
-            IconButton(onPressed: (){
+        Container(
+          padding: EdgeInsets.all(20),
+          child: Text("Tenant Details"),
+        ),
+        SizedBox(
+          height: 80,
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  IconButton(onPressed: (){
 
-            }, icon: Icon(Icons.call,size: 50,)),
-            Text('${tenant.name}')
-          ],
+                  }, icon: Icon(Icons.call,size: 40,)),
+                  SizedBox(width: 40,),
+                  Text('${tenant.name}')
+                ],
+              ),
+            ),
+          ),
         ),
         SizedBox(height: 20,),
-        Row(
-          children: [
-            Text('Phone Number:'),
-            Text('${tenant.cell}'),
-          ],
+        SizedBox(
+          height: 50,
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Text('Phone Number:'),
+                  Text('${tenant.cell}'),
+                ],
+              ),
+            ),
+          ),
         ),
         SizedBox(height: 20,),
 
-        Row(
-          children: [
-            Text('Amount Due:'),
-            Text('${tenant.balance}'),
-          ],
+        SizedBox(
+          height: 50,
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Text('Amount Due:'),
+                  Text('${tenant.balance}'),
+                ],
+              ),
+            ),
+          ),
         ),
         SizedBox(height: 20,),
 
-        Row(
-          children: [
-            Text('Charge Per Month:'),
-            Text('${tenant.balancedUp}'),
-          ],
+        SizedBox(
+          height: 50,
+
+            child: Card(
+
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Text('Charge Per Month:'),
+                    Text('${tenant.amount}'),
+                  ],
+                ),
+              ),
+            ),
+
         ),
         SizedBox(height: 20,),
 
@@ -61,9 +123,21 @@ final Tenant tenant;
         ),
         SizedBox(height: 20,),
 
-        ElevatedButton(onPressed: (){
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            ElevatedButton(onPressed: (){
+             tenants.changeBalance(context,tenant,paymentController.text);
+            }, child: Text('PAY')),
+            ElevatedButton(onPressed: (){
 
-        }, child: Text('PAY'))
+
+              Navigator.pop(context);
+            }, child: Text('CLOSE'))
+          ],
+        ),
+
+
 
 
       ],

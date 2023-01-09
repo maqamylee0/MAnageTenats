@@ -6,10 +6,10 @@ class Tenant{
   String? amount;
   String? cell;
   String? balance;
-  String? balancedUp;
+  String? remaining;
 
   Tenant({this.id, this.name, this.amount, this.cell, this.balance,
-      this.balancedUp});
+      this.remaining});
 
   Map<String, dynamic> toMap() {
     return {
@@ -18,18 +18,18 @@ class Tenant{
       'amount': this.amount,
       'cell': this.cell,
       'balance': this.balance,
-      'balancedUp': this.balancedUp,
+      'remaining': this.remaining,
     };
   }
 
   factory Tenant.fromJson(Map<String, dynamic> map) {
     return Tenant(
-      id: map['ID'] as String,
-      name: map['NAME'] as String,
-      amount: map['AMOUNT'] as String,
-      cell: map['CELL'] as String,
-      balance: map['BALANCE'] as String,
-      balancedUp: map['BALANCEdUP'] as String,
+      id: map['id'] as String,
+      name: map['name'] as String,
+      amount: map['amount'] as String,
+      cell: map['cell'] as String,
+      balance: map['balance'] as String,
+      remaining: map['remaining'] as String,
     );
   }
 }
