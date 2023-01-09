@@ -13,24 +13,44 @@ import 'package:kitubs/services/tenant_service.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  final cron = Cron();
-  cron.schedule(Schedule.parse(' */1 * * * *'), ()  async{
-    if (kDebugMode) {
-      print(DateTime.now());
-      increasePayment();
+  bool updated = false;
+  // if(updated == false){
 
-    }});
+  final cron = Cron();
+    cron.schedule(Schedule.parse('0 0 1 * *'), ()  async{
+      if (kDebugMode) {
+        print(DateTime.now());
+        increasePayment();
+        updated = !updated;
+      }});
+
   runApp(
-        DevicePreview(builder: (BuildContext context) {
-         return MultiProvider(
+        // DevicePreview(builder: (BuildContext context) {
+        //  return
+
+           MultiProvider(
             providers: [
               ChangeNotifierProvider(create: (_) => TenantsProvider()),
               ChangeNotifierProvider(create: (_) => PaymentProvider()),
 
             ],
             child: const MyApp(),
-          ) ;
-        }));
+          ));
+       // }
+      // ));
+  // }else{
+  //   runApp(
+  //       DevicePreview(builder: (BuildContext context) {
+  //         return MultiProvider(
+  //           providers: [
+  //             ChangeNotifierProvider(create: (_) => TenantsProvider()),
+  //             ChangeNotifierProvider(create: (_) => PaymentProvider()),
+  //
+  //           ],
+  //           child: const MyApp(),
+  //         ) ;
+  //       }));
+  // }
 
 
 }

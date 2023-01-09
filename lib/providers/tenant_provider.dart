@@ -25,6 +25,7 @@ class TenantsProvider extends ChangeNotifier{
     await  tenantService.addTenants(context, tenant);
     refetch = true;
     print(tenant);
+    getAllTenants();
     notifyListeners();
   }
 
@@ -36,6 +37,7 @@ class TenantsProvider extends ChangeNotifier{
     await  tenantService.changeBalance(tenant,data);
     refetchBalance = true;
     print(tenant);
+    getAllTenants();
     notifyListeners();
   }
 }

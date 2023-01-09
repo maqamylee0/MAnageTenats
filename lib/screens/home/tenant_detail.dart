@@ -18,144 +18,147 @@ final Tenant tenant;
     final payments = Provider.of<PaymentProvider>(context);
 
     return
-      Container(
-      margin: EdgeInsets.all(20),
-      // decoration: BoxDecoration(
-      //   borderRadius: BorderRadius.circular(10),
-      //   color: Colors.white,
-      //   border: Border(
-      //     left: BorderSide(
-      //       color: Colors.green,
-      //     ),
-      //   ),
-      // ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-        color: Colors.grey
-      ),
-      height: MediaQuery.of(context).size.height*0.7,
-      padding: EdgeInsets.all(30),
+      SingleChildScrollView(
+        child: Container(
+        margin: EdgeInsets.all(10),
+        // decoration: BoxDecoration(
+        //   borderRadius: BorderRadius.circular(10),
+        //   color: Colors.white,
+        //   border: Border(
+        //     left: BorderSide(
+        //       color: Colors.green,
+        //     ),
+        //   ),
+        // ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          color: Colors.grey
+        ),
+        height: MediaQuery.of(context).size.height*0.8,
+        padding: EdgeInsets.all(20),
     child: Column(
 
 
 
-      children: [
-        Container(
-          padding: EdgeInsets.all(20),
-          child: Text("Tenant Details"),
-        ),
-        SizedBox(
-          height: 80,
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  IconButton(onPressed: (){
-
-                  }, icon: Icon(Icons.call,size: 40,)),
-                  SizedBox(width: 40,),
-                  Text('${tenant.name}')
-                ],
-              ),
-            ),
+        children: [
+          Container(
+            padding: EdgeInsets.all(10),
+            child: Text("Tenant Details"),
           ),
-        ),
-        SizedBox(height: 20,),
-        SizedBox(
-          height: 50,
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Text('Phone Number:'),
-                  Text('${tenant.cell}'),
-                ],
-              ),
-            ),
-          ),
-        ),
-        SizedBox(height: 20,),
-
-        SizedBox(
-          height: 50,
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Text('Amount Due:'),
-                  Text('${tenant.balance}'),
-                ],
-              ),
-            ),
-          ),
-        ),
-        SizedBox(height: 20,),
-
-        SizedBox(
-          height: 50,
-
+          SizedBox(
+            height: 80,
             child: Card(
-
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
-                    Text('Charge Per Month:'),
-                    Text('${tenant.amount}'),
+                    IconButton(onPressed: (){
+
+                    }, icon: Icon(Icons.call,size: 40,)),
+                    SizedBox(width: 40,),
+                    Text('${tenant.name}')
                   ],
                 ),
               ),
             ),
+          ),
+          SizedBox(height: 20,),
+          SizedBox(
+            height: 50,
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Text('Phone Number:'),
+                    Text('${tenant.cell}'),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 20,),
 
-        ),
-        SizedBox(height: 20,),
+          SizedBox(
+            height: 50,
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Text('Amount Due:'),
+                    Text('${tenant.balance}'),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 20,),
 
-        Text("Register payment"),
-        SizedBox(height: 20,),
+          SizedBox(
+            height: 50,
 
-        TextFormField(
-          controller: paymentController,
-          keyboardType: TextInputType.number,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          validator: (value)=>
-          value == '' ? "Enter amount": null,
-          decoration: InputDecoration(labelText: 'Amount'),
+              child: Card(
 
-        ),
-        SizedBox(height: 20,),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Text('Charge Per Month:'),
+                      Text('${tenant.amount}'),
+                    ],
+                  ),
+                ),
+              ),
 
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            ElevatedButton(onPressed: () async {
-              showLoaderDialog(context);
-             tenants.changeBalance(context,tenant,paymentController.text);
-             Payment payment = Payment();
-             payment.id='';
-             payment.amount= paymentController.text;
-             payment.payer = tenant.name;
-             payment.date = DateTime.now().toString();
-             await payments.addPayment(context, payment.toMap());
-              Navigator.pop(context);
+          ),
+          SizedBox(height: 20,),
 
-            }, child: Text('PAY')),
-            ElevatedButton(onPressed: (){
+          Text("Register payment"),
+          SizedBox(height: 10,),
+
+          TextFormField(
+            controller: paymentController,
+            keyboardType: TextInputType.number,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: (value)=>
+            value == '' ? "Enter amount": null,
+            decoration: InputDecoration(labelText: 'Amount'),
+
+          ),
+          SizedBox(height: 10,),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ElevatedButton(onPressed: () async {
+                showLoaderDialog(context);
+               tenants.changeBalance(context,tenant,paymentController.text);
+               Payment payment = Payment();
+               payment.id='';
+               payment.amount= paymentController.text;
+               payment.payer = tenant.name;
+               payment.date = DateTime.now().toString();
+               await payments.addPayment(context, payment.toMap());
+                Navigator.pop(context);
+                Navigator.pop(context);
+
+              }, child: Text('PAY')),
+              ElevatedButton(onPressed: (){
 
 
-              Navigator.pop(context);
-            }, child: Text('CLOSE'))
-          ],
-        ),
+                Navigator.pop(context);
+              }, child: Text('CLOSE'))
+            ],
+          ),
 
 
 
 
-      ],
+        ],
     ),
-    );
+    ),
+      );
   }
 
   void showLoaderDialog(BuildContext context) {

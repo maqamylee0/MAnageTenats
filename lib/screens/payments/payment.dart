@@ -21,7 +21,7 @@ class PaymentPage extends StatelessWidget {
       ),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(5),
           child: payments.listOfPayments.isEmpty ?
           CircularProgressIndicator():
           ListView.builder(
