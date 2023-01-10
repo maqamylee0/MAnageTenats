@@ -8,8 +8,12 @@ final Payment payment;
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
-      child: Card(
+      padding: EdgeInsets.all(5),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.amber),
+            borderRadius: BorderRadius.circular(10)
+      ),
+
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -17,7 +21,7 @@ final Payment payment;
             children: [
               Column(
                 children: [
-                  Icon(Icons.receipt_long_outlined),
+                  Icon(Icons.receipt_long_outlined,size: 30,),
                   SizedBox(height: 10,),
                   Text('${payment.date}'),
                 ],
@@ -33,7 +37,7 @@ final Payment payment;
             ],
           ),
         ),
-      ),
-    );
+      );
+
   }
 }

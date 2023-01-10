@@ -15,9 +15,15 @@ class Home extends StatelessWidget {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
+
+        preferredSize: Size.fromHeight(80),
         child: AppBar(
-          title: Text("Tenants"),
+          title: Column(
+            children: [
+              SizedBox(height: 30,),
+              Text("Tenants",style: TextStyle(fontSize: 25),),
+            ],
+          ),
         ),
       ),
       body: SafeArea(

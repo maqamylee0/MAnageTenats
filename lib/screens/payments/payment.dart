@@ -14,14 +14,20 @@ class PaymentPage extends StatelessWidget {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
+
+        preferredSize: Size.fromHeight(80),
         child: AppBar(
-          title: Text("Payments"),
+          title: Column(
+            children: [
+              SizedBox(height: 30,),
+              Text("Payments",style: TextStyle(fontSize: 25),),
+            ],
+          ),
         ),
       ),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.all(5),
+          padding: EdgeInsets.all(20),
           child: payments.listOfPayments.isEmpty ?
           CircularProgressIndicator():
           ListView.builder(

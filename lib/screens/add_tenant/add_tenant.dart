@@ -43,12 +43,17 @@ class _AddTenantState extends State<AddTenant> {
 
 
     return  Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
+      appBar: PreferredSize(
+
+        preferredSize: Size.fromHeight(80),
+        child: AppBar(
+          title: Column(
+            children: [
+              SizedBox(height: 30,),
+              Text("Add Tenants",style: TextStyle(fontSize: 25),),
+            ],
+          ),
         ),
-        title: Text("Add Tenant"),
       ),
 
       body: SafeArea(
@@ -78,7 +83,7 @@ class _AddTenantState extends State<AddTenant> {
                       onStepCancel: cancel,
                       steps: <Step>[
                         Step(
-                          title: new Text('Personal Information'),
+                          title: new Text('Personal Information',style: TextStyle(fontSize: 20),),
                           content: Column(
                             children: <Widget>[
                               TextFormField(
@@ -98,7 +103,7 @@ class _AddTenantState extends State<AddTenant> {
                           StepState.complete : StepState.disabled,
                         ),
                         Step(
-                          title: new Text('Contact'),
+                          title: new Text('Contact',style: TextStyle(fontSize: 20)),
                           content: Column(
                             children: <Widget>[
                               TextFormField(
@@ -117,7 +122,7 @@ class _AddTenantState extends State<AddTenant> {
 
 
                         Step(
-                          title: new Text('Amount Per Month'),
+                          title: new Text('Amount Per Month',style: TextStyle(fontSize: 20)),
                           content: Column(
                             children: <Widget>[
                               TextFormField(
@@ -137,21 +142,25 @@ class _AddTenantState extends State<AddTenant> {
                     ),
                   ),
                 ),
-                ElevatedButton(
+                SizedBox(height: 30,),
+                SizedBox(
+                  width: 200,
+                  child: ElevatedButton(
 
-                  child: Text("Save",style: TextStyle(fontWeight:FontWeight.bold,fontSize: 20),),
-                  onPressed: () async  {
+                    child: Text("Save",style: TextStyle(fontWeight:FontWeight.bold,fontSize: 20),),
+                    onPressed: () async  {
 
-                     await saveDetails(context,tenants);
-                      await tenants.addTenants(context,tenant.toMap());
+                       await saveDetails(context,tenants);
+                        await tenants.addTenants(context,tenant.toMap());
 
-                  },
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: Size.fromHeight(60),
+                    },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size.fromHeight(50),
 
 
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
                     ),
                   ),
                 ),
