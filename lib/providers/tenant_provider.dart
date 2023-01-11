@@ -36,6 +36,7 @@ class TenantsProvider extends ChangeNotifier{
         .listen((QuerySnapshot<TenantModel> snapshot) {
          setshowCircle = false ;
         listOfTenants = snapshot.items;
+        notifyListeners();
     });
 
     // listOfTenants = await tenantService.getAllTenants();
@@ -50,12 +51,22 @@ class TenantsProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  Future<void> changeBalance(context,var tenant,paid) async {
+  // Future<void> changeBalance(context,var tenant,paid) async {
+  //   showCircle = true;
+  //
+  //   var remain = int.parse(tenant.balance) - int.parse(paid);
+  //   var data = {'balance': remain};
+  //   await  tenantService.changeBalance(tenant,data);
+  //   refetchBalance = true;
+  //   print(tenant);
+  //   getAllTenants();
+  //   notifyListeners();
+  // }
+  Future<void> updateBalance(context,var tenant,paid) async {
     showCircle = true;
 
     var remain = int.parse(tenant.balance) - int.parse(paid);
-    var data = {'balance': remain};
-    await  tenantService.changeBalance(tenant,data);
+    await  amplifyService.updateAmount(tenant,remain.toString());
     refetchBalance = true;
     print(tenant);
     getAllTenants();

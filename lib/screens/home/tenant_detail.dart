@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kitubs/models/ModelProvider.dart';
+import 'package:kitubs/screens/dashboard.dart';
 import 'package:kitubs/screens/home/model/payment_model.dart';
 import 'package:kitubs/screens/home/model/tenant_model.dart';
 import 'package:provider/provider.dart';
@@ -133,17 +135,20 @@ final TenantModel tenant;
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ElevatedButton(onPressed: () async {
-                showLoaderDialog(context);
-               tenants.changeBalance(context,tenant,paymentController.text);
-               Payment payment = Payment();
-               payment.id='';
-               payment.amount= paymentController.text;
-               payment.payer = tenant.name;
-               payment.date = DateTime.now().toString();
-               await payments.addPayment(context, payment.toMap());
-                Navigator.pop(context);
-                Navigator.pop(context);
+                // showLoaderDialog(context);
+               tenants.updateBalance(context,tenant,paymentController.text);
+               PaymentModel payment = PaymentModel(
+                 amount: paymentController.text,
+                 payer: tenant.name,
+                 date: DateTime.now().toString()
+               );
 
+               await payments.addPayment(context, payment);
+                Navigator
+                    .of(context)
+                    .pushReplacement(new MaterialPageRoute(builder: (BuildContext context) {
+                  return  Dashboard();
+                }));
               }, child: Text('PAY')),
               ElevatedButton(onPressed: (){
 

@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kitubs/models/ModelProvider.dart';
 import 'package:kitubs/screens/home/model/payment_model.dart';
 
 class BigPay extends StatelessWidget {
   const BigPay({Key? key,  required this.payment}) : super(key: key);
-final Payment payment;
+final PaymentModel payment;
   @override
   Widget build(BuildContext context) {
     return Container(
