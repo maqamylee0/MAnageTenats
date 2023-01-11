@@ -43,6 +43,11 @@ dependencies:
   fluttertoast: ^8.1.2
   cron: ^0.5.1
   workmanager: ^0.5.1
+  amplify_flutter: ^0.6.10
+  amplify_auth_cognito: ^0.6.10
+  amplify_authenticator: ^0.2.4
+  amplify_datastore: ^0.6.10
+  amplify_api: <1.0.0
 
 dev_dependencies:
   flutter_test:

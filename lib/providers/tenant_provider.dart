@@ -1,4 +1,10 @@
+import 'dart:async';
+
+import 'package:amplify_datastore/amplify_datastore.dart';
+import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:kitubs/models/ModelProvider.dart';
+import 'package:kitubs/services/amplify_service.dart';
 import 'package:provider/provider.dart';
 
 import '../screens/home/model/tenant_model.dart';
@@ -6,23 +12,38 @@ import '../services/tenant_service.dart';
 
 class TenantsProvider extends ChangeNotifier{
 
-  List<Tenant> listOfTenants = [];
+  List<TenantModel> listOfTenants = [];
   bool refetch = false;
   bool refetchBalance = false;
   bool showCircle = false;
 
+  late StreamSubscription<QuerySnapshot<TenantModel>> _subscription;
+
   var tenantService = TenantService();
+  var amplifyService = AmplifyService();
 
   TenantsProvider(){
     getAllTenants();
   }
 
+  set setshowCircle(bool value) {
+    showCircle = value;
+    notifyListeners();
+  }
+
   Future<void> getAllTenants() async {
-    listOfTenants = await tenantService.getAllTenants();
+    _subscription = Amplify.DataStore.observeQuery(TenantModel.classType)
+        .listen((QuerySnapshot<TenantModel> snapshot) {
+         setshowCircle = false ;
+        listOfTenants = snapshot.items;
+    });
+
+    // listOfTenants = await tenantService.getAllTenants();
     notifyListeners();
   }
   Future<void> addTenants(context,var tenant) async {
-    await  tenantService.addTenants(context, tenant);
+    // await  tenantService.addTenants(context, tenant);
+    await amplifyService.saveTenant(tenant);
     refetch = true;
     print(tenant);
     getAllTenants();

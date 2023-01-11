@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../models/TenantModel.dart';
 import '../../providers/tenant_provider.dart';
 import '../home/model/tenant_model.dart';
 
@@ -17,7 +18,6 @@ class AddTenant extends StatefulWidget {
 
 class _AddTenantState extends State<AddTenant> {
   int _currentStep = 0;
-  Tenant tenant = Tenant();
   GlobalKey<FormState> formKey = new GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
   TextEditingController amountController = TextEditingController();
@@ -58,7 +58,7 @@ class _AddTenantState extends State<AddTenant> {
 
       body: SafeArea(
         child: SingleChildScrollView(
-          child:
+          child: tenants.showCircle ? CircularProgressIndicator():
 
 
 
@@ -149,9 +149,8 @@ class _AddTenantState extends State<AddTenant> {
 
                     child: Text("Save",style: TextStyle(fontWeight:FontWeight.bold,fontSize: 20),),
                     onPressed: () async  {
-
+                      tenants.setshowCircle = true;
                        await saveDetails(context,tenants);
-                        await tenants.addTenants(context,tenant.toMap());
 
                     },
                     style: ElevatedButton.styleFrom(
@@ -177,13 +176,13 @@ class _AddTenantState extends State<AddTenant> {
   }
 
   saveDetails(context,tenants) async {
-    tenant.id = '';
-    tenant.name = nameController.text;
-    tenant.amount = amountController.text;
-    tenant.cell= phoneControlller.text ;
-    tenant.remaining = '0';
-    tenant.balance = amountController.text;
-
+    TenantModel tenant = TenantModel(
+      name: nameController.text,
+      amount: amountController.text,
+      cell: phoneControlller.text,
+      remaining: '0',
+      balance: amountController.text
+    );
 
     if (kDebugMode) {
       print(tenant.name);
@@ -191,6 +190,7 @@ class _AddTenantState extends State<AddTenant> {
 
     }
 
+    await tenants.addTenants(context,tenant);
 
 
 

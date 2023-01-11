@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kitubs/screens/home/tenant_detail.dart';
 
+import '../../../models/TenantModel.dart';
 import '../model/tenant_model.dart';
 
 class BigPost extends StatelessWidget {
   const BigPost({Key? key,  required this.tenant}) : super(key: key);
- final Tenant tenant;
+ final TenantModel tenant;
   @override
   Widget build(BuildContext context) {
     return Container(

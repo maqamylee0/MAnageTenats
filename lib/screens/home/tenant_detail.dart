@@ -4,12 +4,13 @@ import 'package:kitubs/screens/home/model/payment_model.dart';
 import 'package:kitubs/screens/home/model/tenant_model.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/TenantModel.dart';
 import '../../providers/payment_provider.dart';
 import '../../providers/tenant_provider.dart';
 
 class TenantDetail extends StatelessWidget {
   const TenantDetail({Key? key, required this.tenant}) : super(key: key);
-final Tenant tenant;
+final TenantModel tenant;
 
   @override
   Widget build(BuildContext context) {
