@@ -11,18 +11,41 @@ import 'package:kitubs/screens/home/home.dart';
 import 'package:kitubs/screens/home/model/tenant_model.dart';
 import 'package:kitubs/services/tenant_service.dart';
 import 'package:provider/provider.dart';
+import 'package:workmanager/workmanager.dart';
+
+// @pragma('vm:entry-point')
+void callbackDispatcher(){
+  Workmanager().executeTask((taskname,inputData) async {
+    print("Task executed $taskname");
+    await increasePayment();
+    return Future.value(true);
+  });
+}
+Future<void> increasePayment() async {
+  TenantService tenantService = TenantService();
+  List<Tenant> listOfTenants = await tenantService.getAllTenants();
+  for(Tenant tenant in listOfTenants){
+    var balance =(int.parse(tenant.balance!)   + int.parse(tenant.amount!)).toString();
+    var data = {"balance": "${balance}"};
+    await tenantService.changeBalance(tenant, data);
+  }
+}
 
 void main() {
+WidgetsFlutterBinding.ensureInitialized();
+
   bool updated = false;
   // if(updated == false){
-
-  final cron = Cron();
-    cron.schedule(Schedule.parse('0 0 1 * *'), ()  async{
-      if (kDebugMode) {
-        print(DateTime.now());
-        increasePayment();
-        updated = !updated;
-      }});
+  // final cron = Cron();
+  // //0 0 1 * *
+  //   cron.schedule(Schedule.parse('*/1 * * * *'), ()  async{
+  //     await Workmanager().initialize(callbackDispatcher);
+  //    await  Workmanager().registerOneOffTask('test', 'task',constraints:Constraints(networkType: NetworkType.connected));
+  //     if (kDebugMode) {
+  //       print(DateTime.now());
+  //       // increasePayment();
+  //       updated = !updated;
+  //     }});
 
   runApp(
         // DevicePreview(builder: (BuildContext context) {
@@ -55,15 +78,7 @@ void main() {
 
 }
 
-Future<void> increasePayment() async {
-  TenantService tenantService = TenantService();
-  List<Tenant> listOfTenants = await tenantService.getAllTenants();
-  for(Tenant tenant in listOfTenants){
-    var balance =(int.parse(tenant.balance! )   + int.parse(tenant.amount!)).toString();
-    var data = {"balance": "${balance}"};
-    await tenantService.changeBalance(tenant, data);
-  }
-}
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
