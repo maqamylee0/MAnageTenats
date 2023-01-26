@@ -47,18 +47,18 @@ class _AddTenantState extends State<AddTenant> {
 
 
     return  Scaffold(
-      appBar: PreferredSize(
-
-        preferredSize: Size.fromHeight(80),
-        child: AppBar(
-          title: Column(
-            children: [
-              SizedBox(height: 30,),
-              Text("Add Tenants",style: TextStyle(fontSize: 25),),
-            ],
-          ),
-        ),
-      ),
+      // appBar: PreferredSize(
+      //
+      //   preferredSize: Size.fromHeight(80),
+      //   child: AppBar(
+      //     title: Column(
+      //       children: [
+      //         SizedBox(height: 30,),
+      //         Text("Add Tenants",style: TextStyle(fontSize: 25),),
+      //       ],
+      //     ),
+      //   ),
+      // ),
 
       body: SafeArea(
         child: SingleChildScrollView(
@@ -82,12 +82,13 @@ class _AddTenantState extends State<AddTenant> {
 
                       physics: ScrollPhysics(),
                       currentStep: _currentStep,
+
                       onStepTapped: (step) => tapped(step),
                       onStepContinue: continued,
                       onStepCancel: cancel,
                       steps: <Step>[
                         Step(
-                          title: new Text('Personal Information',style: TextStyle(fontSize: 20),),
+                          title: new Text('Personal Information',style: TextStyle(fontSize: 15),),
                           content: Column(
                             children: <Widget>[
                               TextFormField(
@@ -107,7 +108,7 @@ class _AddTenantState extends State<AddTenant> {
                           StepState.complete : StepState.disabled,
                         ),
                         Step(
-                          title: new Text('Contact',style: TextStyle(fontSize: 20)),
+                          title: new Text('Contact',style: TextStyle(fontSize: 15)),
                           content: Column(
                             children: <Widget>[
                               TextFormField(
@@ -126,7 +127,7 @@ class _AddTenantState extends State<AddTenant> {
 
 
                         Step(
-                          title: new Text('Amount Per Month',style: TextStyle(fontSize: 20)),
+                          title: new Text('Amount Per Month',style: TextStyle(fontSize: 15)),
                           content: Column(
                             children: <Widget>[
                               TextFormField(
@@ -144,7 +145,7 @@ class _AddTenantState extends State<AddTenant> {
                         ),
 
                         Step(
-                          title: new Text('NextOfKin',style: TextStyle(fontSize: 20)),
+                          title: new Text('NextOfKin',style: TextStyle(fontSize: 15)),
                           content: Column(
                             children: <Widget>[
                               TextFormField(
@@ -161,7 +162,7 @@ class _AddTenantState extends State<AddTenant> {
                           StepState.complete : StepState.disabled,
                         ),
                         Step(
-                          title: new Text('Next Of Kin Telephone',style: TextStyle(fontSize: 20)),
+                          title: new Text('Next Of Kin Telephone',style: TextStyle(fontSize: 15)),
                           content: Column(
                             children: <Widget>[
                               TextFormField(

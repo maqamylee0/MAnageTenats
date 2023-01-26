@@ -22,34 +22,34 @@ class _PaymentPageState extends State<PaymentPage> {
     final payments = Provider.of<PaymentProvider>(context);
 
     return Scaffold(
-      appBar: PreferredSize(
-
-
-        preferredSize: Size.fromHeight(80),
-        child: AppBar(
-
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: SizedBox(
-                child: IconButton(
-                  icon: Icon(Icons.filter),
-                  onPressed: () {
-                    payments.filter= false;
-                  },
-
-                ),
-              ),
-            )
-          ],
-          title: Column(
-            children: [
-              SizedBox(height: 30,),
-              Text("Payments",style: TextStyle(fontSize: 25),),
-            ],
-          ),
-        ),
-      ),
+      // appBar: PreferredSize(
+      //
+      //
+      //   preferredSize: Size.fromHeight(80),
+      //   child: AppBar(
+      //
+      //     actions: [
+      //       Padding(
+      //         padding: const EdgeInsets.all(20.0),
+      //         child: SizedBox(
+      //           child: IconButton(
+      //             icon: Icon(Icons.filter),
+      //             onPressed: () {
+      //               payments.filter= false;
+      //             },
+      //
+      //           ),
+      //         ),
+      //       )
+      //     ],
+      //     title: Column(
+      //       children: [
+      //         SizedBox(height: 30,),
+      //         Text("Payments",style: TextStyle(fontSize: 25),),
+      //       ],
+      //     ),
+      //   ),
+      // ),
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.all(20),
@@ -57,14 +57,31 @@ class _PaymentPageState extends State<PaymentPage> {
           CircularProgressIndicator():
           Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text("From",style: TextStyle(fontSize: 15),),
-                  Text("To",style: TextStyle(fontSize: 15)),
+              Container(
+                height: 40,
+                color: Colors.cyan,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text("From",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),),
+                    SizedBox(
+                      child: IconButton(
 
-                ],
+                        icon: Icon(Icons.filter),
+                        onPressed: () {
+                          payments.setfilter(false);
+                          // payments.setfilter2(false);
+                          payments.fromDate = DateTime.now();
+                          payments.toDate = DateTime.now();
+                        },
+
+                      ),),
+                    Text("To",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600)),
+
+                  ],
+                ),
               ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -100,11 +117,11 @@ class _PaymentPageState extends State<PaymentPage> {
               ),
               Expanded(
                 child: ListView.builder(
-                    itemCount: payments.filter ? payments.listOfPaymentsFrom.length: payments.listOfPayments.length,
+                    itemCount: payments.filter  ? payments.listOfPaymentsFromdummy.length: payments.listOfPayments.length,
                     itemBuilder: (context, index){
                       return Column(
                         children: [
-                          BigPay(payment:payments.filter ? payments.listOfPaymentsFrom[index] : payments.listOfPayments[index],),
+                          BigPay(payment:payments.filter ? payments.listOfPaymentsFromdummy[index] : payments.listOfPayments[index],),
                           Divider()
                         ],
                       );
@@ -140,7 +157,8 @@ class _PaymentPageState extends State<PaymentPage> {
     );
   }
   _showDatePicker(payment){
-    payment.filter = true;
+    payment.setfilter(true);
+
     showDatePicker(context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2022),
@@ -159,7 +177,6 @@ class _PaymentPageState extends State<PaymentPage> {
 
   }
   _showDatePicker1(payment){
-    payment.filter = true;
     showDatePicker(context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2022),

@@ -26,6 +26,7 @@ class PaymentProvider extends ChangeNotifier{
   DateTime fromDate = DateTime.now();
   DateTime toDate = DateTime.now();
   bool filter = false;
+  bool filter2 = false;
   num total = 0;
 
   PaymentProvider(){
@@ -36,6 +37,14 @@ class PaymentProvider extends ChangeNotifier{
     showCircle = value;
     notifyListeners();
     sumPayments();
+  }
+   void setfilter(bool value){
+    filter= value;
+    notifyListeners();
+   }
+  void setfilter2(bool value){
+    filter2 = value;
+    notifyListeners();
   }
   void setfromDates(value) {
     fromDate = value;
@@ -81,20 +90,30 @@ class PaymentProvider extends ChangeNotifier{
       TemporalDate froDate = TemporalDate(fromDate);
       if(element.date!.compareTo(froDate) > 0){
         listOfPaymentsFrom.add(element);
-        listOfPaymentsFromdummy.add(element);
 
         print("DT1 is after DT2");
       }
     }
+    listOfPaymentsFromdummy=[];
+    filterPaymentsTo();
     notifyListeners();
-    sumPayments();
 
   }
   void filterPaymentsTo(){
-    for (var element in listOfPaymentsFromdummy) {
+    listOfPaymentsFrom = [];
+    for (var element in listOfPayments) {
+      TemporalDate froDate = TemporalDate(fromDate);
+      if(element.date!.compareTo(froDate) > 0){
+        listOfPaymentsFrom.add(element);
+
+        print("DT1 is after DT2");
+      }
+    }
+    for (var element in listOfPaymentsFrom) {
       TemporalDate tooDate = TemporalDate(toDate);
-      if(element.date!.compareTo(tooDate) >= 0){
-        listOfPaymentsFrom.remove(element);
+      if(element.date!.compareTo(tooDate) == 0 || element.date!.compareTo(tooDate) < 0 ){
+        // listOfPaymentsFrom.remove(element);
+        listOfPaymentsFromdummy.add(element);
 
       }
     }
@@ -105,17 +124,18 @@ class PaymentProvider extends ChangeNotifier{
   void sumPayments(){
     total = 0;
 
-    if(filter){
-      for (var element in listOfPaymentsFrom) {
+   if (filter) {
+      for (var element in listOfPaymentsFromdummy) {
         total = total + int.parse(element.amount!);
         notifyListeners();
       }
-    }else{
-      for (var element in listOfPayments) {
-        total = total + int.parse(element.amount!);
-        notifyListeners();
+    }else
+      {
+        for (var element in listOfPayments) {
+          total = total + int.parse(element.amount!);
+          notifyListeners();
+        }
       }
     }
 
   }
-}
