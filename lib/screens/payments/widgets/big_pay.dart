@@ -1,5 +1,7 @@
+import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:kitubs/models/ModelProvider.dart';
 import 'package:kitubs/screens/home/model/payment_model.dart';
 
@@ -8,6 +10,10 @@ class BigPay extends StatelessWidget {
 final PaymentModel payment;
   @override
   Widget build(BuildContext context) {
+
+    // TemporalDate? t = payment.date;
+    // DateTime ti = t.toDate();
+    // var time = DateFormat.jm().format(ti);
     return Container(
       padding: EdgeInsets.all(5),
       decoration: BoxDecoration(

@@ -35,4 +35,8 @@ class AmplifyService{
       safePrint('An error occurred while saving Todo: $e');
     }
   }
+
+  void calculateTotal(){
+
+  }
 }

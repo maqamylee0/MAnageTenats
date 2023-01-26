@@ -1,3 +1,4 @@
+import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kitubs/models/ModelProvider.dart';
@@ -6,7 +7,6 @@ import 'package:kitubs/screens/home/model/payment_model.dart';
 import 'package:kitubs/screens/home/model/tenant_model.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/TenantModel.dart';
 import '../../providers/payment_provider.dart';
 import '../../providers/tenant_provider.dart';
 
@@ -140,7 +140,7 @@ final TenantModel tenant;
                PaymentModel payment = PaymentModel(
                  amount: paymentController.text,
                  payer: tenant.name,
-                 date: DateTime.now().toString()
+                 date: TemporalDate(DateTime.now())
                );
 
                await payments.addPayment(context, payment);

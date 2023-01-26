@@ -22,6 +22,10 @@ class _AddTenantState extends State<AddTenant> {
   TextEditingController nameController = TextEditingController();
   TextEditingController amountController = TextEditingController();
   TextEditingController phoneControlller = TextEditingController();
+  TextEditingController telControlller = TextEditingController();
+  TextEditingController kinControlller = TextEditingController();
+  TextEditingController kinTelControlller = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +37,7 @@ class _AddTenantState extends State<AddTenant> {
     }
 
     continued(){
-      _currentStep < 2 ?
+      _currentStep < 4 ?
       setState(() => _currentStep += 1): null;
     }
     cancel(){
@@ -136,6 +140,41 @@ class _AddTenantState extends State<AddTenant> {
                           ),
                           isActive:_currentStep >= 0,
                           state: _currentStep >= 2 ?
+                          StepState.complete : StepState.disabled,
+                        ),
+
+                        Step(
+                          title: new Text('NextOfKin',style: TextStyle(fontSize: 20)),
+                          content: Column(
+                            children: <Widget>[
+                              TextFormField(
+                                controller: kinControlller,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(labelText: 'Enter amount per month'),
+
+                              ),
+
+                            ],
+                          ),
+                          isActive:_currentStep >= 0,
+                          state: _currentStep >= 3 ?
+                          StepState.complete : StepState.disabled,
+                        ),
+                        Step(
+                          title: new Text('Next Of Kin Telephone',style: TextStyle(fontSize: 20)),
+                          content: Column(
+                            children: <Widget>[
+                              TextFormField(
+                                controller: kinTelControlller,
+                                keyboardType: TextInputType.phone,
+                                decoration: InputDecoration(labelText: 'Enter amount per month'),
+
+                              ),
+
+                            ],
+                          ),
+                          isActive:_currentStep >= 0,
+                          state: _currentStep >= 4 ?
                           StepState.complete : StepState.disabled,
                         ),
                       ],

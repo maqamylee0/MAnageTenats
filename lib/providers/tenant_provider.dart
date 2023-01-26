@@ -16,6 +16,8 @@ class TenantsProvider extends ChangeNotifier{
   bool refetch = false;
   bool refetchBalance = false;
   bool showCircle = false;
+  num totalAmount = 0;
+  num advance = 0;
 
   late StreamSubscription<QuerySnapshot<TenantModel>> _subscription;
 
@@ -24,6 +26,7 @@ class TenantsProvider extends ChangeNotifier{
 
   TenantsProvider(){
     getAllTenants();
+    calculateTotal();
   }
 
   set setshowCircle(bool value) {
@@ -36,12 +39,28 @@ class TenantsProvider extends ChangeNotifier{
         .listen((QuerySnapshot<TenantModel> snapshot) {
          setshowCircle = false ;
         listOfTenants = snapshot.items;
+         totalAmount = 0;
+         advance=0;
+         calculateTotal();
         notifyListeners();
     });
 
     // listOfTenants = await tenantService.getAllTenants();
     notifyListeners();
   }
+  void calculateTotal(){
+    listOfTenants.forEach((element) {
+      int total = int.parse(element.balance!);
+      if(total! < 0){
+        advance = advance + total;
+      }else {
+        totalAmount = totalAmount + total ;
+
+      }
+      notifyListeners();
+    });
+  }
+
   Future<void> addTenants(context,var tenant) async {
     // await  tenantService.addTenants(context, tenant);
     await amplifyService.saveTenant(tenant);
@@ -72,4 +91,6 @@ class TenantsProvider extends ChangeNotifier{
     getAllTenants();
     notifyListeners();
   }
+
+
 }

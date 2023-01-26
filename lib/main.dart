@@ -39,18 +39,25 @@ import 'models/ModelProvider.dart';
 //   }
 // }
 Future<void> _configureAmplify() async {
-  try{
-    final _dataStorePlugin = AmplifyDataStore(modelProvider: ModelProvider.instance);
+  try {
+    final _dataStorePlugin =
+        AmplifyDataStore(modelProvider: ModelProvider.instance);
     final apiPlugin = AmplifyAPI();
     final amplifyAuthCognito = AmplifyAuthCognito();
-    await Amplify.addPlugins([amplifyAuthCognito,_dataStorePlugin,]);
-    await  Amplify.configure(amplifyconfig);
-  }catch(e){
+    await Amplify.addPlugins([
+      amplifyAuthCognito,
+      _dataStorePlugin,
+      apiPlugin
+    ]);
+    await Amplify.configure(amplifyconfig);
+  } catch (e) {
     print('Failed to configure Amplify $e');
-  }}
+  }
+}
+
 Future<void> main() async {
-WidgetsFlutterBinding.ensureInitialized();
-await _configureAmplify();
+  WidgetsFlutterBinding.ensureInitialized();
+  await _configureAmplify();
 
   bool updated = false;
   // if(updated == false){
@@ -66,19 +73,18 @@ await _configureAmplify();
   //     }});
 
   runApp(
-        // DevicePreview(builder: (BuildContext context) {
-        //  return
+      // DevicePreview(builder: (BuildContext context) {
+      //  return
 
-           MultiProvider(
-            providers: [
-              ChangeNotifierProvider(create: (_) => TenantsProvider()),
-              ChangeNotifierProvider(create: (_) => PaymentProvider()),
-
-            ],
-            child: const MyApp(),
-          ));
-       // }
-      // ));
+      MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => TenantsProvider()),
+      ChangeNotifierProvider(create: (_) => PaymentProvider()),
+    ],
+    child: const MyApp(),
+  ));
+  // }
+  // ));
   // }else{
   //   runApp(
   //       DevicePreview(builder: (BuildContext context) {
@@ -92,11 +98,7 @@ await _configureAmplify();
   //         ) ;
   //       }));
   // }
-
-
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -105,12 +107,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Authenticator(
-      child: MaterialApp(
+      child:  MaterialApp(
         builder: Authenticator.builder(),
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: '',
         theme: ThemeData(
-
           primarySwatch: Colors.blue,
         ),
         home: Dashboard(),

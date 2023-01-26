@@ -13,7 +13,7 @@ class BigPost extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.amber)
+        // border: Border.all(color: Colors.amber)
       ),
       child: GestureDetector(
         onTap: (){
@@ -29,7 +29,7 @@ class BigPost extends StatelessWidget {
           // );
         },
         child: Container(
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.all(5),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -56,22 +56,23 @@ class BigPost extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
 
-                  Text(
-                    "${tenant.name?.toUpperCase()}",
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  SizedBox(height: 10,),
+
                   // Text('${tenant.amount}'),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                          "Amount Due :  "
-                      ),
-                      Text(
-                          "${tenant.balance}"
-                      ),
-                    ],
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width*0.8,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "${tenant.name?.toUpperCase()}",
+                          style: TextStyle(fontSize: 12,fontWeight: FontWeight.w600,),
+                        ),
+                        Text(
+                            "${tenant.balance}",style: TextStyle(fontWeight: FontWeight.w600,color:
+                        (int.parse(tenant.balance!) > 0) ?Colors.green : Colors.red)
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),

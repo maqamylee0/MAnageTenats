@@ -13,6 +13,9 @@ import '../services/payment_service.dart';
 
 class PaymentProvider extends ChangeNotifier{
   List<PaymentModel> listOfPayments = [];
+  List<PaymentModel> listOfPaymentsFrom = [];
+  List<PaymentModel> listOfPaymentsFromdummy = [];
+
   bool refetch = false;
   bool refetchBalance = false;
   late StreamSubscription<QuerySnapshot<PaymentModel>> _subscriptionPayments;
@@ -20,11 +23,26 @@ class PaymentProvider extends ChangeNotifier{
  bool showCircle = false;
   var paymentService = PaymentService();
   var tenant = TenantsProvider();
+  DateTime fromDate = DateTime.now();
+  DateTime toDate = DateTime.now();
+  bool filter = false;
+  num total = 0;
+
   PaymentProvider(){
     getAllpayments();
   }
+  
   set setshowCircle(bool value) {
     showCircle = value;
+    notifyListeners();
+    sumPayments();
+  }
+  void setfromDates(value) {
+    fromDate = value;
+    notifyListeners();
+  }
+  void setToDate(value) {
+    toDate = value;
     notifyListeners();
   }
   Future<void> getAllpayments() async {
@@ -32,10 +50,11 @@ class PaymentProvider extends ChangeNotifier{
         .listen((QuerySnapshot<PaymentModel> snapshot) {
       setshowCircle = false ;
       listOfPayments = snapshot.items;
-      print('paymeeeeeeeeeeeeeeeeeeeeeeeee ${listOfPayments[0].payer}');
-
-      print(listOfPayments);
+      // print('paymeeeeeeeeeeeeeeeeeeeeeeeee ${listOfPayments[0].payer}');
+      // print(listOfPayments);
       notifyListeners();
+      sumPayments();
+
     });}
 
 
@@ -43,7 +62,7 @@ class PaymentProvider extends ChangeNotifier{
       // await  tenantService.addTenants(context, tenant);
       await amplifyService.savePayment(payment);
       refetch = true;
-      print('paymeeeeeeeeeeeeeeeeeeeeeeeee ${payment.payer}');
+      // print('paymeeeeeeeeeeeeeeeeeeeeeeeee ${payment.payer}');
       getAllpayments();
       notifyListeners();
     }
@@ -57,4 +76,46 @@ class PaymentProvider extends ChangeNotifier{
   //   listOfPayments = await paymentService.getAllPayments();
   //   notifyListeners();
   // }
+  void filterPaymentsFrom(){
+    for (var element in listOfPayments) {
+      TemporalDate froDate = TemporalDate(fromDate);
+      if(element.date!.compareTo(froDate) > 0){
+        listOfPaymentsFrom.add(element);
+        listOfPaymentsFromdummy.add(element);
+
+        print("DT1 is after DT2");
+      }
+    }
+    notifyListeners();
+    sumPayments();
+
+  }
+  void filterPaymentsTo(){
+    for (var element in listOfPaymentsFromdummy) {
+      TemporalDate tooDate = TemporalDate(toDate);
+      if(element.date!.compareTo(tooDate) >= 0){
+        listOfPaymentsFrom.remove(element);
+
+      }
+    }
+    notifyListeners();
+    sumPayments();
+
+  }
+  void sumPayments(){
+    total = 0;
+
+    if(filter){
+      for (var element in listOfPaymentsFrom) {
+        total = total + int.parse(element.amount!);
+        notifyListeners();
+      }
+    }else{
+      for (var element in listOfPayments) {
+        total = total + int.parse(element.amount!);
+        notifyListeners();
+      }
+    }
+
+  }
 }
