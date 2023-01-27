@@ -10,6 +10,8 @@ class BigPay extends StatelessWidget {
 final PaymentModel payment;
   @override
   Widget build(BuildContext context) {
+    final formatCurrency = new NumberFormat.currency(locale: 'en_UG', symbol: "",decimalDigits: 1);
+       DateTime dateTime = DateTime.parse(payment.date!);
 
     // TemporalDate? t = payment.date;
     // DateTime ti = t.toDate();
@@ -23,14 +25,16 @@ final PaymentModel payment;
 
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Row(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
+              Text('${ DateFormat.yMEd().add_jms().format(dateTime)
+                  }'),
+
               Column(
                 children: [
                   Icon(Icons.receipt_long_outlined,size: 30,),
                   SizedBox(height: 10,),
-                  Text('${payment.date}'),
                 ],
               ),
               SizedBox(height: 20,),
@@ -38,7 +42,7 @@ final PaymentModel payment;
                 children: [
                   Text('${payment.payer?.toUpperCase()}'),
                   SizedBox(height: 10,),
-                  Text('${payment.amount}'),
+                  Text('${formatCurrency.format(int.parse(payment.amount!))}'),
                 ],
               )
             ],

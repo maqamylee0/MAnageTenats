@@ -86,15 +86,14 @@ class PaymentProvider extends ChangeNotifier{
   //   notifyListeners();
   // }
   void filterPaymentsFrom(){
+    listOfPaymentsFrom =[];
     for (var element in listOfPayments) {
-      TemporalDate froDate = TemporalDate(fromDate);
-      if(element.date!.compareTo(froDate) > 0){
+      DateTime elementDate = DateTime.parse(element.date!);
+      if(elementDate.compareTo(fromDate) >= 0){
         listOfPaymentsFrom.add(element);
-
-        print("DT1 is after DT2");
+        // print("DT1 is after DT2");
       }
     }
-    listOfPaymentsFromdummy=[];
     filterPaymentsTo();
     notifyListeners();
 
@@ -102,21 +101,28 @@ class PaymentProvider extends ChangeNotifier{
   void filterPaymentsTo(){
     listOfPaymentsFrom = [];
     for (var element in listOfPayments) {
-      TemporalDate froDate = TemporalDate(fromDate);
-      if(element.date!.compareTo(froDate) > 0){
+      DateTime elementDate = DateTime.parse(element.date!);
+      if(elementDate.compareTo(fromDate) >= 0 ){
         listOfPaymentsFrom.add(element);
-
-        print("DT1 is after DT2");
+        notifyListeners();
+        // print("DT1 is after DT2");
       }
     }
+    // print("payyyeyeyyeyfrom ${listOfPaymentsFrom.length}");
+    listOfPaymentsFromdummy = [];
+
     for (var element in listOfPaymentsFrom) {
-      TemporalDate tooDate = TemporalDate(toDate);
-      if(element.date!.compareTo(tooDate) == 0 || element.date!.compareTo(tooDate) < 0 ){
+      // toDate.add(Duration(days: 1));
+      DateTime elementDate = DateTime.parse(element.date!);
+      DateTime torDate = toDate.add(Duration(days: 1));
+      if(elementDate.compareTo(torDate) < 0 ){
         // listOfPaymentsFrom.remove(element);
         listOfPaymentsFromdummy.add(element);
 
       }
     }
+    // print("payyyeyeyyeydummy ${listOfPaymentsFromdummy.length}");
+
     notifyListeners();
     sumPayments();
 

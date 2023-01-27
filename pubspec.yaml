@@ -50,6 +50,7 @@ dependencies:
   amplify_api: <1.0.0
   intl: ^0.17.0
   syncfusion_flutter_datepicker: ^20.4.44
+  url_launcher: ^6.1.8
 
 dev_dependencies:
   flutter_test:

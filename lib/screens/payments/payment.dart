@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:kitubs/screens/home/widgets/refresh.dart';
 import 'package:kitubs/screens/payments/widgets/big_pay.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +22,7 @@ class _PaymentPageState extends State<PaymentPage> {
   @override
   Widget build(BuildContext context) {
     final payments = Provider.of<PaymentProvider>(context);
+    final formatCurrency = new NumberFormat.currency(locale: 'en_UG', symbol: "",decimalDigits: 1);
 
     return Scaffold(
       // appBar: PreferredSize(
@@ -54,7 +57,9 @@ class _PaymentPageState extends State<PaymentPage> {
         child: Container(
           padding: EdgeInsets.all(20),
           child: payments.listOfPayments.isEmpty ?
-          CircularProgressIndicator():
+          Center(child: Text("No Payments Yet",style: TextStyle(fontSize: 20,color: Colors.green),))
+
+                :
           Column(
             children: [
               Container(
@@ -128,26 +133,33 @@ class _PaymentPageState extends State<PaymentPage> {
                     }
                 ),
               ),
-              Container(
-                padding: EdgeInsets.all(10),
-                // color: Colors.cyan,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      // color: Colors.cyan,
-                      child: Text(
-                          "Total Amount for Payments :",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 15,)
+              GestureDetector(
+                onTap: (){
+                  showBottomSheet(context: context, builder: (BuildContext context){
+                    return Refresh();
+                  });
+                },
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  // color: Colors.cyan,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        // color: Colors.cyan,
+                        child: Text(
+                            "Total Amount :",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 15,)
+                        ),
                       ),
-                    ),
 
-                    Container(
-                      // color:Colors.cyan ,
-                      child: Text(
-                          "${payments.total}",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 15,color: Colors.green)
+                      Container(
+                        // color:Colors.cyan ,
+                        child: Text(
+                            "${formatCurrency.format(payments.total)}",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 15,color: Colors.green)
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -166,7 +178,7 @@ class _PaymentPageState extends State<PaymentPage> {
     ).then((value) {
        payment.setfromDates(value) ;
       payment.filterPaymentsFrom();
-       payment.filterPaymentsTo();
+       // payment.filterPaymentsTo();
     }
         // setState((){
         //   date  = value!  ;
@@ -185,7 +197,7 @@ class _PaymentPageState extends State<PaymentPage> {
       // print('lllll $value');
       payment.setToDate(value);
       payment.filterPaymentsFrom();
-      payment.filterPaymentsTo();
+      // payment.filterPaymentsTo();
     }
         // setState((){
         //   date1  = value!  ;

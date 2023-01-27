@@ -81,13 +81,39 @@ class TenantsProvider extends ChangeNotifier{
   //   getAllTenants();
   //   notifyListeners();
   // }
+
+  Future<void> renewBalance( ) async {
+    showCircle = true;
+
+    listOfTenants.forEach((element) async {
+      int monthly = int.parse(element.amount!);
+      var newBalance = int.parse(element.balance!) + monthly;
+      await  amplifyService.updateAmount(element,newBalance.toString());
+
+      notifyListeners();
+    });
+    refetchBalance = true;
+    getAllTenants();
+    notifyListeners();
+
+  }
+  Future<void> deleteTenant(id ) async {
+    showCircle = true;
+      await  amplifyService.deleteTenantWithId(id);
+      notifyListeners();
+    refetchBalance = true;
+    getAllTenants();
+    notifyListeners();
+
+  }
+
   Future<void> updateBalance(context,var tenant,paid) async {
     showCircle = true;
 
     var remain = int.parse(tenant.balance) - int.parse(paid);
     await  amplifyService.updateAmount(tenant,remain.toString());
     refetchBalance = true;
-    print(tenant);
+    // print(tenant);
     getAllTenants();
     notifyListeners();
   }

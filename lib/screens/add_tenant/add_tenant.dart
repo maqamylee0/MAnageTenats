@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:kitubs/screens/dashboard.dart';
+import 'package:kitubs/screens/home/home.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,6 +25,7 @@ class _AddTenantState extends State<AddTenant> {
   TextEditingController amountController = TextEditingController();
   TextEditingController phoneControlller = TextEditingController();
   TextEditingController telControlller = TextEditingController();
+  TextEditingController ninControlller = TextEditingController();
   TextEditingController kinControlller = TextEditingController();
   TextEditingController kinTelControlller = TextEditingController();
 
@@ -98,6 +101,15 @@ class _AddTenantState extends State<AddTenant> {
                                 validator: (value)=>
                                 value == "" ? "Enter a name": null,
                                 decoration: InputDecoration(labelText: 'Full Name'),
+
+                              ),
+                              TextFormField(
+                                keyboardType: TextInputType.text,
+                                controller: ninControlller,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                validator: (value)=>
+                                value == "" ? "Enter a nin": null,
+                                decoration: InputDecoration(labelText: 'NIN'),
 
                               ),
 
@@ -220,8 +232,11 @@ class _AddTenantState extends State<AddTenant> {
       name: nameController.text,
       amount: amountController.text,
       cell: phoneControlller.text,
-      remaining: '0',
-      balance: amountController.text
+      nin: ninControlller.text,
+      balance: amountController.text,
+      nextOfKin: kinControlller.text,
+      nextOfKinTel: kinTelControlller.text,
+
     );
 
     if (kDebugMode) {
@@ -231,7 +246,9 @@ class _AddTenantState extends State<AddTenant> {
     }
 
     await tenants.addTenants(context,tenant);
-
+    Navigator.push(context, MaterialPageRoute(builder: (context){
+      return Dashboard();
+    }));
 
 
   }

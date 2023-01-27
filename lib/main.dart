@@ -114,8 +114,10 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.cyan,
         ),
-        home: Dashboard(),
-      ),
-    );
+        home:  Dashboard()
+
+        ),
+      );
+
   }
 }

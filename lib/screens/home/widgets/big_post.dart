@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:kitubs/screens/home/tenant_detail.dart';
 
 import '../../../models/TenantModel.dart';
@@ -8,8 +9,13 @@ import '../model/tenant_model.dart';
 class BigPost extends StatelessWidget {
   const BigPost({Key? key,  required this.tenant}) : super(key: key);
  final TenantModel tenant;
+
   @override
   Widget build(BuildContext context) {
+
+    final formatCurrency = new NumberFormat.currency(locale: 'en_UG', symbol: "",decimalDigits: 1);
+    // final NumberFormat ugCurrency = NumberFormat('#,###', 'en_US');
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -68,7 +74,7 @@ class BigPost extends StatelessWidget {
                           style: TextStyle(fontSize: 12,fontWeight: FontWeight.w600,),
                         ),
                         Text(
-                            "${tenant.balance}",style: TextStyle(fontWeight: FontWeight.w600,color:
+                            "${formatCurrency.format(int.parse(tenant.balance!))}",style: TextStyle(fontWeight: FontWeight.w600,color:
                         (int.parse(tenant.balance!) > 0) ?Colors.green : Colors.red)
                         ),
                       ],

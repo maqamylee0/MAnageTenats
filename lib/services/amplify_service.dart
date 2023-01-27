@@ -35,8 +35,21 @@ class AmplifyService{
       safePrint('An error occurred while saving Todo: $e');
     }
   }
-
-  void calculateTotal(){
-
+  Future<void> deleteTenantWithId(id) async {
+    final oldPosts = await Amplify.DataStore.query(
+      TenantModel.classType,
+      where: TenantModel.ID.eq('$id'),
+    );
+    // Query can return more than one posts with a different predicate
+    // For this example, it is ensured that it will return one post
+    final oldPost = oldPosts.first;
+    try {
+      await Amplify.DataStore.delete(oldPost);
+      print('Deleted a post');
+    } on DataStoreException catch (e) {
+      print('Delete failed: $e');
+    }
   }
+
+
 }

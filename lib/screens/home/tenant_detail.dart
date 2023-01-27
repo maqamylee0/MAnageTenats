@@ -3,17 +3,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kitubs/models/ModelProvider.dart';
 import 'package:kitubs/screens/dashboard.dart';
+import 'package:kitubs/screens/home/home.dart';
 import 'package:kitubs/screens/home/model/payment_model.dart';
 import 'package:kitubs/screens/home/model/tenant_model.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 import '../../providers/payment_provider.dart';
 import '../../providers/tenant_provider.dart';
 
-class TenantDetail extends StatelessWidget {
+class TenantDetail extends StatefulWidget {
   const TenantDetail({Key? key, required this.tenant}) : super(key: key);
 final TenantModel tenant;
 
+  @override
+  State<TenantDetail> createState() => _TenantDetailState();
+}
+
+class _TenantDetailState extends State<TenantDetail> {
   @override
   Widget build(BuildContext context) {
     TextEditingController paymentController = TextEditingController();
@@ -56,10 +63,13 @@ final TenantModel tenant;
                 child: Row(
                   children: [
                     IconButton(onPressed: (){
+                      UrlLauncher.launch('tel:${widget.tenant.cell}');
+                      print("twwww ${widget.tenant.cell}");
 
+                      // UrlLauncher.launch("tel:${tenant.cell}");
                     }, icon: Icon(Icons.call,size: 40,)),
                     SizedBox(width: 40,),
-                    Text('${tenant.name}')
+                    Text('${widget.tenant.name}')
                   ],
                 ),
               ),
@@ -74,7 +84,7 @@ final TenantModel tenant;
                 child: Row(
                   children: [
                     Text('Phone Number:'),
-                    Text('${tenant.cell}'),
+                    Text('${widget.tenant.cell}'),
                   ],
                 ),
               ),
@@ -90,7 +100,7 @@ final TenantModel tenant;
                 child: Row(
                   children: [
                     Text('Amount Due:'),
-                    Text('${tenant.balance}'),
+                    Text('${widget.tenant.balance}'),
                   ],
                 ),
               ),
@@ -108,7 +118,7 @@ final TenantModel tenant;
                   child: Row(
                     children: [
                       Text('Charge Per Month:'),
-                      Text('${tenant.amount}'),
+                      Text('${widget.tenant.amount}'),
                     ],
                   ),
                 ),
@@ -136,13 +146,15 @@ final TenantModel tenant;
             children: [
               ElevatedButton(onPressed: () async {
                 // showLoaderDialog(context);
-               tenants.updateBalance(context,tenant,paymentController.text);
+                var date = DateTime.now();
+                print('ddddddddddddddddddd${date.year}-${date.month}-${date.day}Z');
+
+                tenants.updateBalance(context,widget.tenant,paymentController.text);
                PaymentModel payment = PaymentModel(
                  amount: paymentController.text,
-                 payer: tenant.name,
-                 date: TemporalDate(DateTime.now())
+                 payer: widget.tenant.name,
+                 date:  date.toString()
                );
-
                await payments.addPayment(context, payment);
                 Navigator
                     .of(context)
@@ -159,7 +171,10 @@ final TenantModel tenant;
           ),
 
 
+          ElevatedButton(onPressed: (){
 
+            _showMyDialog(tenants);
+          }, child: Text('DELETE'))
 
         ],
     ),
@@ -182,5 +197,41 @@ final TenantModel tenant;
         },
       );
     }
+
+  Future<void> _showMyDialog(tenantProvider) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete balances'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Text('Are you sure you want to delete ${widget.tenant.name}.'),
+                // Text('Would you like to continue?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Confirm'),
+              onPressed: () async {
+                print('Confirmed');
+                await tenantProvider.deleteTenant(widget.tenant.id);
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> Home()));
+              },
+            ),
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
+}
 
