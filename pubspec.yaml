@@ -51,6 +51,10 @@ dependencies:
   intl: ^0.17.0
   syncfusion_flutter_datepicker: ^20.4.44
   url_launcher: ^6.1.8
+  image_picker_gallery_camera: ^0.2.2
+  image_picker: ^0.7.5+4
+  amplify_storage_s3: ^0.6.12
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:

@@ -23,9 +23,9 @@ class BigPost extends StatelessWidget {
       ),
       child: GestureDetector(
         onTap: (){
-          showBottomSheet(context: context, builder: (BuildContext context){
-            return TenantDetail(tenant:tenant);
-          });
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>TenantDetail(tenant: tenant)));
+          // Navigator.push(context: context, builder: (BuildContext context){
+          //   return TenantDetail(tenant:tenant);
           //Navigate to article deatils page
           // Navigator.push(
           //     context,

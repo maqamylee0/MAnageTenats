@@ -5,6 +5,7 @@ import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_authenticator/amplify_authenticator.dart';
 import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:amplify_storage_s3/amplify_storage_s3.dart';
 import 'package:cron/cron.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
@@ -47,7 +48,8 @@ Future<void> _configureAmplify() async {
     await Amplify.addPlugins([
       amplifyAuthCognito,
       _dataStorePlugin,
-      apiPlugin
+      apiPlugin,
+      AmplifyStorageS3(),
     ]);
     await Amplify.configure(amplifyconfig);
   } catch (e) {

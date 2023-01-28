@@ -11,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 import '../../providers/payment_provider.dart';
 import '../../providers/tenant_provider.dart';
+import 'agreement.dart';
 
 class TenantDetail extends StatefulWidget {
   const TenantDetail({Key? key, required this.tenant}) : super(key: key);
@@ -28,8 +29,51 @@ class _TenantDetailState extends State<TenantDetail> {
     final payments = Provider.of<PaymentProvider>(context);
 
     return
-      SingleChildScrollView(
-        child: Container(
+      Scaffold(
+        appBar: AppBar(
+          leading: IconButton(onPressed: (){
+            Navigator.pop(context);
+          }
+              , icon: Icon(Icons.arrow_back)),
+          actions: [
+            PopupMenuButton(
+              // add icon, by default "3 dot" icon
+              // icon: Icon(Icons.book)
+                itemBuilder: (context){
+                  return [
+                    PopupMenuItem<int>(
+                      value: 0,
+                      child: Text("Agreement"),
+                    ),
+
+                    PopupMenuItem<int>(
+                      value: 1,
+                      child: Text("Delete"),
+                    ),
+
+                    // PopupMenuItem<int>(
+                    //   value: 2,
+                    //   child: Text("Logout"),
+                    // ),
+                  ];
+                },
+                onSelected:(value){
+                  if(value == 0){
+                    tenants.setkey(widget.tenant.key);
+
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Agreement(tenant:widget.tenant)));
+                  }else if(value == 1){
+                    _showMyDialog(tenants);
+                  }else if(value == 2){
+                    print("Logout menu is selected.");
+                  }
+                }
+            ),
+
+          ],
+          title: Text("${widget.tenant.name}"),
+        ),
+        body: Container(
         margin: EdgeInsets.all(10),
         // decoration: BoxDecoration(
         //   borderRadius: BorderRadius.circular(10),
@@ -162,19 +206,28 @@ class _TenantDetailState extends State<TenantDetail> {
                   return  Dashboard();
                 }));
               }, child: Text('PAY')),
-              ElevatedButton(onPressed: (){
-
-
-                Navigator.pop(context);
-              }, child: Text('CLOSE'))
+              // ElevatedButton(onPressed: (){
+              //
+              //
+              //   Navigator.pop(context);
+              // }, child: Text('CLOSE'))
             ],
           ),
 
 
-          ElevatedButton(onPressed: (){
-
-            _showMyDialog(tenants);
-          }, child: Text('DELETE'))
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //   children: [
+          //     ElevatedButton(onPressed: (){
+          //
+          //       _showMyDialog(tenants);
+          //     }, child: Text('DELETE')),
+          //     ElevatedButton(onPressed: (){
+          //
+          //       _showMyDialog(tenants);
+          //     }, child: Text('Agreement'))
+          //   ],
+          // )
 
         ],
     ),

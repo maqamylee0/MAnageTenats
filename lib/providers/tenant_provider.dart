@@ -18,6 +18,8 @@ class TenantsProvider extends ChangeNotifier{
   bool showCircle = false;
   num totalAmount = 0;
   num advance = 0;
+  String path = '';
+  String key = '';
 
   late StreamSubscription<QuerySnapshot<TenantModel>> _subscription;
 
@@ -27,6 +29,7 @@ class TenantsProvider extends ChangeNotifier{
   TenantsProvider(){
     getAllTenants();
     calculateTotal();
+    getUrlForFile();
   }
 
   set setshowCircle(bool value) {
@@ -68,6 +71,25 @@ class TenantsProvider extends ChangeNotifier{
     print(tenant);
     getAllTenants();
     notifyListeners();
+  }
+  void setkey(key){
+    key = key;
+    notifyListeners();
+  }
+  Future<String> getUrlForFile() async {
+    try {
+      final result = await Amplify.Storage.getUrl(key: key);
+      key = result.url;
+      print('paaaaaaaaaaaaaaaaaaaa ${result.url}');
+       notifyListeners();
+
+      return result.url;
+
+    } catch (e) {
+
+      safePrint('An error occurred while saving Todo: $e');
+      throw(e);
+    }
   }
 
   // Future<void> changeBalance(context,var tenant,paid) async {
@@ -117,6 +139,13 @@ class TenantsProvider extends ChangeNotifier{
     getAllTenants();
     notifyListeners();
   }
+
+  // void getImageUrl() {}
+
+  // Future<void> getImageUrl() async {
+  //   path = await amplifyService.getUrlForFile(key);
+  //   notifyListeners();
+  // }
 
 
 }

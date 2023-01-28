@@ -236,6 +236,7 @@ class _AddTenantState extends State<AddTenant> {
       balance: amountController.text,
       nextOfKin: kinControlller.text,
       nextOfKinTel: kinTelControlller.text,
+      key: ''
 
     );
 

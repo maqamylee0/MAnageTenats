@@ -1,4 +1,4 @@
-
+import 'dart:io';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:kitubs/models/ModelProvider.dart';
 
@@ -48,6 +48,41 @@ class AmplifyService{
       print('Deleted a post');
     } on DataStoreException catch (e) {
       print('Delete failed: $e');
+    }
+  }
+  Future<String> uploadImage(pickedFilePath,tenant) async {
+
+
+    // Upload image with the current time as the key
+    final key = DateTime.now().toString();
+    final file = File(pickedFilePath);
+    String results ='';
+    try {
+      final UploadFileResult result = await Amplify.Storage.uploadFile(
+        local: file,
+        key: key +'.jpg' ,
+        onProgress: (progress) {
+          safePrint('Fraction completed: ${progress.getFractionCompleted()}');
+        },
+      );
+      results = result.key;
+      safePrint('Successfully uploaded image: ${result.key}');
+      await updateUser(tenant,results);
+    } on StorageException catch (e) {
+      safePrint('Error uploading image: $e');
+    }
+    return results;
+  }
+
+  Future<void> updateUser(TenantModel tenant,key) async {
+    final updatedUser = tenant.copyWith(key: key);
+    try {
+
+      // to update data in DataStore, you again pass an instance of a model to
+      // Amplify.DataStore.save()
+      await Amplify.DataStore.save(updatedUser);
+    } catch (e) {
+      safePrint('An error occurred while saving Todo: $e');
     }
   }
 
