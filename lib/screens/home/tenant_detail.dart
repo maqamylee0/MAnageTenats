@@ -272,7 +272,7 @@ class _TenantDetailState extends State<TenantDetail> {
               onPressed: () async {
                 print('Confirmed');
                 await tenantProvider.deleteTenant(widget.tenant.id);
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> Home()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> Dashboard()));
               },
             ),
             TextButton(
