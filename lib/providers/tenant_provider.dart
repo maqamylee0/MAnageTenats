@@ -146,6 +146,20 @@ class TenantsProvider extends ChangeNotifier{
   //   path = await amplifyService.getUrlForFile(key);
   //   notifyListeners();
   // }
+  Future<void> updateTenant(var tenant,key,value) async {
+    showCircle = true;
+    if (key == 'name') {
+      await amplifyService.updateName(tenant, value);
+    } else if (key == 'cell'){
+      await amplifyService.updateCell(tenant, value);
+    }else  {
+        await amplifyService.updateAmountPerMonth(tenant, value);
 
+  }
+    refetchBalance = true;
+    // print(tenant);
+    getAllTenants();
+    notifyListeners();
+  }
 
 }

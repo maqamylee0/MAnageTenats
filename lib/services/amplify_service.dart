@@ -86,5 +86,40 @@ class AmplifyService{
     }
   }
 
+  Future<void> updateName(TenantModel tenant,value) async {
 
+    final updatedTenant = tenant.copyWith(name: value);
+    try {
+
+      // to update data in DataStore, you again pass an instance of a model to
+      // Amplify.DataStore.save()
+      await Amplify.DataStore.save(updatedTenant);
+    } catch (e) {
+      safePrint('An error occurred while saving Todo: $e');
+    }
+  }
+  Future<void> updateCell(TenantModel tenant,value) async {
+
+    final updatedTenant = tenant.copyWith(cell: value);
+    try {
+
+      // to update data in DataStore, you again pass an instance of a model to
+      // Amplify.DataStore.save()
+      await Amplify.DataStore.save(updatedTenant);
+    } catch (e) {
+      safePrint('An error occurred while saving Todo: $e');
+    }
+  }
+  Future<void> updateAmountPerMonth(TenantModel tenant,value) async {
+
+    final updatedTenant = tenant.copyWith(amount: value);
+    try {
+
+      // to update data in DataStore, you again pass an instance of a model to
+      // Amplify.DataStore.save()
+      await Amplify.DataStore.save(updatedTenant);
+    } catch (e) {
+      safePrint('An error occurred while saving Todo: $e');
+    }
+  }
 }

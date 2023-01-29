@@ -12,6 +12,7 @@ import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import '../../providers/payment_provider.dart';
 import '../../providers/tenant_provider.dart';
 import 'agreement.dart';
+import 'edit_tenant.dart';
 
 class TenantDetail extends StatefulWidget {
   const TenantDetail({Key? key, required this.tenant}) : super(key: key);
@@ -51,10 +52,10 @@ class _TenantDetailState extends State<TenantDetail> {
                       child: Text("Delete"),
                     ),
 
-                    // PopupMenuItem<int>(
-                    //   value: 2,
-                    //   child: Text("Logout"),
-                    // ),
+                    PopupMenuItem<int>(
+                      value: 2,
+                      child: Text("Edit"),
+                    ),
                   ];
                 },
                 onSelected:(value){
@@ -65,7 +66,7 @@ class _TenantDetailState extends State<TenantDetail> {
                   }else if(value == 1){
                     _showMyDialog(tenants);
                   }else if(value == 2){
-                    print("Logout menu is selected.");
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>EditTenant(tenant:widget.tenant)));
                   }
                 }
             ),
@@ -191,7 +192,7 @@ class _TenantDetailState extends State<TenantDetail> {
               ElevatedButton(onPressed: () async {
                 // showLoaderDialog(context);
                 var date = DateTime.now();
-                print('ddddddddddddddddddd${date.year}-${date.month}-${date.day}Z');
+                // print('ddddddddddddddddddd${date.year}-${date.month}-${date.day}Z');
 
                 tenants.updateBalance(context,widget.tenant,paymentController.text);
                PaymentModel payment = PaymentModel(
