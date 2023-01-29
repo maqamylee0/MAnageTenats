@@ -100,7 +100,7 @@ class Home extends StatelessWidget {
                     Container(
                       // color: Colors.cyan,
                       child: Text(
-                          "Total Amount Due :",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 15,)
+                          "Total Amount :",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 10,)
                       ),
                     ),
                     Container(

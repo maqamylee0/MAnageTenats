@@ -74,165 +74,167 @@ class _TenantDetailState extends State<TenantDetail> {
           ],
           title: Text("${widget.tenant.name}"),
         ),
-        body: Container(
-        margin: EdgeInsets.all(10),
-        // decoration: BoxDecoration(
-        //   borderRadius: BorderRadius.circular(10),
-        //   color: Colors.white,
-        //   border: Border(
-        //     left: BorderSide(
-        //       color: Colors.green,
-        //     ),
-        //   ),
-        // ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: Colors.grey
-        ),
-        height: MediaQuery.of(context).size.height*0.8,
-        padding: EdgeInsets.all(20),
+        body: SingleChildScrollView(
+          child: Container(
+          margin: EdgeInsets.all(10),
+          // decoration: BoxDecoration(
+          //   borderRadius: BorderRadius.circular(10),
+          //   color: Colors.white,
+          //   border: Border(
+          //     left: BorderSide(
+          //       color: Colors.green,
+          //     ),
+          //   ),
+          // ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            color: Colors.grey
+          ),
+          height: MediaQuery.of(context).size.height*0.8,
+          padding: EdgeInsets.all(20),
     child: Column(
 
 
 
-        children: [
-          Container(
-            padding: EdgeInsets.all(10),
-            child: Text("Tenant Details"),
-          ),
-          SizedBox(
-            height: 80,
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    IconButton(onPressed: (){
-                      UrlLauncher.launch('tel:${widget.tenant.cell}');
-                      print("twwww ${widget.tenant.cell}");
-
-                      // UrlLauncher.launch("tel:${tenant.cell}");
-                    }, icon: Icon(Icons.call,size: 40,)),
-                    SizedBox(width: 40,),
-                    Text('${widget.tenant.name}')
-                  ],
-                ),
-              ),
+          children: [
+            Container(
+              padding: EdgeInsets.all(10),
+              child: Text("Tenant Details"),
             ),
-          ),
-          SizedBox(height: 20,),
-          SizedBox(
-            height: 50,
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Text('Phone Number:'),
-                    Text('${widget.tenant.cell}'),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 20,),
-
-          SizedBox(
-            height: 50,
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Text('Amount Due:'),
-                    Text('${widget.tenant.balance}'),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 20,),
-
-          SizedBox(
-            height: 50,
-
+            SizedBox(
+              height: 80,
               child: Card(
-
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
-                      Text('Charge Per Month:'),
-                      Text('${widget.tenant.amount}'),
+                      IconButton(onPressed: (){
+                        UrlLauncher.launch('tel:${widget.tenant.cell}');
+                        // print("twwww ${widget.tenant.cell}");
+
+                        // UrlLauncher.launch("tel:${tenant.cell}");
+                      }, icon: Icon(Icons.call,size: 40,)),
+                      SizedBox(width: 10,),
+                      Text('${widget.tenant.name}')
                     ],
                   ),
                 ),
               ),
+            ),
+            SizedBox(height: 5,),
+            SizedBox(
+              height: 50,
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Text('Phone Number:'),
+                      Text('${widget.tenant.cell}'),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 20,),
 
-          ),
-          SizedBox(height: 20,),
+            SizedBox(
+              height: 50,
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Text('Amount Due:'),
+                      Text('${widget.tenant.balance}'),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 20,),
 
-          Text("Register payment"),
-          SizedBox(height: 10,),
+            SizedBox(
+              height: 50,
 
-          TextFormField(
-            controller: paymentController,
-            keyboardType: TextInputType.number,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (value)=>
-            value == '' ? "Enter amount": null,
-            decoration: InputDecoration(labelText: 'Amount'),
+                child: Card(
 
-          ),
-          SizedBox(height: 10,),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Text('Charge Per Month:'),
+                        Text('${widget.tenant.amount}'),
+                      ],
+                    ),
+                  ),
+                ),
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ElevatedButton(onPressed: () async {
-                // showLoaderDialog(context);
-                var date = DateTime.now();
-                // print('ddddddddddddddddddd${date.year}-${date.month}-${date.day}Z');
+            ),
+            SizedBox(height: 20,),
 
-                tenants.updateBalance(context,widget.tenant,paymentController.text);
-               PaymentModel payment = PaymentModel(
-                 amount: paymentController.text,
-                 payer: widget.tenant.name,
-                 date:  date.toString()
-               );
-               await payments.addPayment(context, payment);
-                Navigator
-                    .of(context)
-                    .pushReplacement(new MaterialPageRoute(builder: (BuildContext context) {
-                  return  Dashboard();
-                }));
-              }, child: Text('PAY')),
-              // ElevatedButton(onPressed: (){
-              //
-              //
-              //   Navigator.pop(context);
-              // }, child: Text('CLOSE'))
-            ],
-          ),
+            Text("Register payment"),
+            SizedBox(height: 10,),
+
+            TextFormField(
+              controller: paymentController,
+              keyboardType: TextInputType.number,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: (value)=>
+              value == '' ? "Enter amount": null,
+              decoration: InputDecoration(labelText: 'Amount'),
+
+            ),
+            SizedBox(height: 10,),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton(onPressed: () async {
+                  // showLoaderDialog(context);
+                  var date = DateTime.now();
+                  // print('ddddddddddddddddddd${date.year}-${date.month}-${date.day}Z');
+
+                  tenants.updateBalance(context,widget.tenant,paymentController.text);
+                 PaymentModel payment = PaymentModel(
+                   amount: paymentController.text,
+                   payer: widget.tenant.name,
+                   date:  date.toString()
+                 );
+                 await payments.addPayment(context, payment);
+                  Navigator
+                      .of(context)
+                      .pushReplacement(new MaterialPageRoute(builder: (BuildContext context) {
+                    return  Dashboard();
+                  }));
+                }, child: Text('PAY')),
+                // ElevatedButton(onPressed: (){
+                //
+                //
+                //   Navigator.pop(context);
+                // }, child: Text('CLOSE'))
+              ],
+            ),
 
 
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-          //   children: [
-          //     ElevatedButton(onPressed: (){
-          //
-          //       _showMyDialog(tenants);
-          //     }, child: Text('DELETE')),
-          //     ElevatedButton(onPressed: (){
-          //
-          //       _showMyDialog(tenants);
-          //     }, child: Text('Agreement'))
-          //   ],
-          // )
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //   children: [
+            //     ElevatedButton(onPressed: (){
+            //
+            //       _showMyDialog(tenants);
+            //     }, child: Text('DELETE')),
+            //     ElevatedButton(onPressed: (){
+            //
+            //       _showMyDialog(tenants);
+            //     }, child: Text('Agreement'))
+            //   ],
+            // )
 
-        ],
+          ],
     ),
     ),
+        ),
       );
   }
 

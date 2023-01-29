@@ -148,7 +148,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       Container(
                         // color: Colors.cyan,
                         child: Text(
-                            "Total Amount :",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 15,)
+                            "Total Amount :",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 10,)
                         ),
                       ),
 
