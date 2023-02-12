@@ -1,16 +1,6 @@
 # kitubs
+An app to manage tenant information and payments
 
-A new Flutter project.
+![Screenshots](https://github.com/maqamylee0/MAnageTenats/blob/master/tenantapp.png)
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
